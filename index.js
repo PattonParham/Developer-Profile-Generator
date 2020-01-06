@@ -8,11 +8,17 @@ const writeFileAsync = util.promisify(fs.writeFile);
 inquirer
     .prompt([
 
-    {message: "Enter you GitHub username please:",
-    name: "username"},
+    {
+    type: "input",
+    name: "username",
+    message: "Enter you GitHub username please:"
+    },
 
-    {message: "What is your favorite color?",
-    name: "favcolor"}
+    {
+    type: "input",
+    name: "favcolor",
+    message: "What is your favorite color?"
+    }
 
     ])
     .then(function({ username }){
@@ -50,6 +56,7 @@ inquirer
                 <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="ie=edge">
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+                <link rel="stylesheet" href="style.css">
                 <title>Document</title>
               </head>
               <body>
@@ -68,15 +75,26 @@ inquirer
               </body>
               </html>`;
               }
+              function generateCSS(cascade){
+                  return `
+                  body{
+                  background-color: red ; 
+
+                  }`
+              }
+              
 
             async function init() {
                 console.log("hi")
                 try {
                   const answers = await inquirer;
-              
+                  const cascade = await inquirer;
+                    
                   const html = generateHTML(answers);
+                  const css = generateCSS(cascade)
               
                   await writeFileAsync("index.html", html);
+                  await writeFileAsync("style.css", css);
               
                   console.log("Successfully wrote to index.html");
                 } catch(err) {
