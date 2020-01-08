@@ -1,0 +1,29 @@
+
+                  body{
+                     
+                    color: lightgrey;
+  
+                    }
+                    .cardio{
+                      background-color: lightgrey;
+                      color: black;
+                      border-style: inset;
+                    }
+                    .wholecard{
+                        text-align: center;
+                      width: 50%;
+                      margin-left: 25%;
+                      margin-top: 10%;
+                    }
+                    body{
+                    background-color: grey;
+                    }
+                    .profimage{
+                        float:center;
+                        width: 200px;
+                        height: 200px;
+                    }
+                    .bio{
+                    text-align: left;    
+                    }
+                    

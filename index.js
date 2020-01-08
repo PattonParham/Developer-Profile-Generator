@@ -17,13 +17,15 @@ inquirer
     {
     type: "input",
     name: "favcolor",
-    message: "What is your favorite color?"
-    }
+    message: "What is your favorite color?",
+    },
 
+    
     ])
-    .then(function({ username }){
+
+    .then(function({ username,favcolor }){
         const queryURL = `https://api.github.com/users/${username}`;
-        
+       
         axios.get(queryURL)
         .then(function(res){
            
@@ -44,6 +46,7 @@ inquirer
            const repos = res.data.public_repos;
            const blog = res.data.blog
            const avatar = res.data.avatar_url
+           const profurl = res.data.html_url
            axios.get(`https://api.github.com/users/${username}/starred`)
            .then(function(star){
                console.log(`Number of Stars: ${star.data.length}`);
@@ -60,17 +63,42 @@ inquirer
                 <title>Document</title>
               </head>
               <body>
-              <div class = "name">${name}<div>
-              <img class = "profimage" href = "${avatar}"><img>
-              <div class = "email">${email}<div>
-              <a class = "location">${location}<a>
-              <a class = "gitprofile"><a>
-              <a class = "blog">${blog}<a>
-              <p class = "bio">${bio}<p>
-              <div class = "pubrepo">${repos}<div>
-              <div class = "followers">${followers}<div>
-              <div class = "gitstars">${stars}<div>
-              <div class = "following">${following}<div>
+              <div class = "card wholecard">
+              <div class = "card-body cardio" style = "background-color: ${favcolor};">
+              <div class = "name">${name}</div>
+              <img class = "profimage" src = "${avatar}"></img>
+                <div class = "row">
+                <div class = "col-4">
+              <div class = "email">Email: ${email}</div>
+              </div>
+              <div class = "col-4">
+              <a class = "location">${location}</a>
+              </div>
+              <div class = "col-4">
+              <a href= ${profurl} class = "gitprofile">Github Profile</a>
+              </div>
+              </div>
+              <a class = "blog">${blog}</a>
+              <p class = "bio">${bio}</p>
+              <div class = "row">
+                  <div class = "col-6">
+              <div class = "pubrepo">Repos: ${repos}</div>
+            </div>
+            <div class = "col-6">
+              <div class = "followers">Followers: ${followers}</div>
+            </div>
+            </div>
+            <div class = "row">
+              <div class = "col-6">
+              <div class = "gitstars">Stars: ${stars}</div>
+            </div>
+            <div class = "col-6">
+              <div class = "following">Following: ${following}</div>
+            </div>
+            </div>
+              
+              </div>
+              </div>
             
               </body>
               </html>`;
@@ -78,18 +106,43 @@ inquirer
               function generateCSS(cascade){
                   return `
                   body{
-                  background-color: red ; 
-
-                  }`
+                     
+                    color: lightgrey;
+  
+                    }
+                    .cardio{
+                      background-color: lightgrey;
+                      color: black;
+                      border-style: inset;
+                    }
+                    .wholecard{
+                        text-align: center;
+                      width: 50%;
+                      margin-left: 25%;
+                      margin-top: 10%;
+                    }
+                    body{
+                    background-color: grey;
+                    }
+                    .profimage{
+                        float:center;
+                        width: 200px;
+                        height: 200px;
+                    }
+                    .bio{
+                    text-align: left;    
+                    }
+                    `
+                    
               }
               
 
             async function init() {
-                console.log("hi")
+                
                 try {
                   const answers = await inquirer;
                   const cascade = await inquirer;
-                    
+            
                   const html = generateHTML(answers);
                   const css = generateCSS(cascade)
               
@@ -128,4 +181,3 @@ inquirer
 //   }
   
 //   init();
-  
